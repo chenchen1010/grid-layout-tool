@@ -223,6 +223,23 @@ document.addEventListener('DOMContentLoaded', () => {
             checkbox.type = 'checkbox';
             checkbox.className = 'preview-checkbox';
             checkbox.onchange = () => updateDownloadButton(downloadSelectedBtn);
+            
+            // 添加点击预览区域选中功能
+            previewSection.onclick = (e) => {
+                // 如果点击的是下载按钮，不触发选中
+                if (e.target.closest('.download-button')) return;
+                
+                checkbox.checked = !checkbox.checked;
+                updateDownloadButton(downloadSelectedBtn);
+                
+                // 更新预览区域的选中状态
+                if (checkbox.checked) {
+                    previewSection.classList.add('selected');
+                } else {
+                    previewSection.classList.remove('selected');
+                }
+            };
+            
             previewSection.appendChild(checkbox);
             
             const gridPreview = document.createElement('div');

@@ -517,9 +517,15 @@ body {
 
 /* 修改预览区域样式 */
 .preview-section {
+    flex: 0 0 400px;
+    min-width: 400px;
     position: relative;
+    scroll-snap-align: start;
+    cursor: pointer; /* 添加指针样式 */
+    user-select: none; /* 防止文本被选中 */
 }
 
+/* 修改复选框样式 */
 .preview-checkbox {
     position: absolute;
     top: 1rem;
@@ -528,9 +534,11 @@ body {
     height: 20px;
     z-index: 2;
     cursor: pointer;
+    pointer-events: none; /* 防止复选框自身触发点击事件 */
 }
-/* 添加选中效果 */
-.preview-section:has(.preview-checkbox:checked) {
+
+/* 选中状态样式 */
+.preview-section.selected {
     outline: 2px solid var(--primary-color);
 }
 
@@ -557,14 +565,6 @@ body {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     width: calc(100% + 4rem);
-}
-
-/* 修改预览区域样式 */
-.preview-section {
-    flex: 0 0 400px;
-    min-width: 400px;
-    position: relative;
-    scroll-snap-align: start;
 }
 
 /* 修改网格预览样式 */

@@ -314,13 +314,23 @@ document.addEventListener('DOMContentLoaded', () => {
         previewContainer.parentNode.insertBefore(actionBar, previewContainer.nextSibling);
     }
 
-    // 添加全选/取消全选功能
+    // 修改全选/取消全选功能
     function toggleSelectAll() {
         const checkboxes = document.querySelectorAll('.preview-checkbox');
         const selectAllBtn = document.querySelector('.select-all-button');
         const isAllSelected = Array.from(checkboxes).every(cb => cb.checked);
         
-        checkboxes.forEach(cb => cb.checked = !isAllSelected);
+        checkboxes.forEach(cb => {
+            cb.checked = !isAllSelected;
+            // 更新预览区域的选中状态
+            const previewSection = cb.closest('.preview-section');
+            if (!isAllSelected) {
+                previewSection.classList.add('selected');
+            } else {
+                previewSection.classList.remove('selected');
+            }
+        });
+        
         selectAllBtn.textContent = isAllSelected ? '全选' : '取消全选';
         
         // 更新下载按钮状态

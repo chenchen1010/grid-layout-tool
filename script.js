@@ -210,6 +210,12 @@ document.addEventListener('DOMContentLoaded', () => {
             Math.min(selectedTemplate.cells, selectedImagesArray.length)
         );
 
+        // 清空预览区域前，先移除已存在的操作栏
+        const existingActionBar = document.querySelector('.preview-action-bar');
+        if (existingActionBar) {
+            existingActionBar.remove();
+        }
+
         // 清空预览区域
         previewContainer.innerHTML = '';
         
@@ -551,22 +557,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             uploadedImages.splice(index, 1);
                             previewContainer.remove();
                         }
-                    };
-                    
-                    // 添加点击选择功能
-                    previewContainer.onclick = () => {
-                        if (selectedImages.has(img)) {
-                            selectedImages.delete(img);
-                            previewContainer.classList.remove('selected');
-                        } else {
-                            selectedImages.add(img);
-                            previewContainer.classList.add('selected');
-                        }
-                        updateSelectedCount();
-                        
-                        // 启用生成预览按钮（如果已选择模板）
-                        const generatePreviewBtn = document.querySelector('.preview-container').previousElementSibling;
-                        generatePreviewBtn.disabled = !selectedTemplate || selectedImages.size === 0;
                     };
                     
                     // 组装预览元素

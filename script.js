@@ -343,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const promises = Array.from(selectedPreviews).map((checkbox, index) => {
                 return new Promise(resolve => {
                     const gridPreview = checkbox.closest('.preview-section').querySelector('.grid-preview');
-                    createPreviewImage(gridPreview).then(dataUrl => {
+                    createAndDownloadImage(gridPreview).then(dataUrl => {
                         zip.file(`grid-image-${index + 1}.png`, dataUrl.split(',')[1], {base64: true});
                         resolve();
                     });

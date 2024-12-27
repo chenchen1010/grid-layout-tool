@@ -530,7 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.onload = () => {
                     // 创建预览元素
                     const previewContainer = document.createElement('div');
-                    previewContainer.className = 'preview-image';
+                    previewContainer.className = 'preview-image selected';
                     
                     // 创建图片元素
                     const previewImg = document.createElement('img');
@@ -544,7 +544,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         e.stopPropagation();
                         const index = uploadedImages.indexOf(img);
                         if (index > -1) {
-                            // 删除图片前，检查是否被选中
                             if (selectedImages.has(img)) {
                                 selectedImages.delete(img);
                                 updateSelectedCount();
@@ -577,8 +576,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     // 添加到预览列表
                     imagesList.insertBefore(previewContainer, imagesList.firstChild);
                     
-                    // 保存图片对象
+                    // 保存图片对象并默认选中
                     uploadedImages.unshift(img);
+                    selectedImages.add(img);
+                    updateSelectedCount();
+                    
+                    // 如果已选择模板，启用生成预览按钮
+                    const generatePreviewBtn = document.querySelector('.preview-container').previousElementSibling;
+                    if (generatePreviewBtn) {
+                        generatePreviewBtn.disabled = !selectedTemplate;
+                    }
                 };
                 img.src = e.target.result;
             };

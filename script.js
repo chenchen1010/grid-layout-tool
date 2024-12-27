@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 添加生成预览按钮
         const generatePreviewBtn = document.createElement('button');
-        generatePreviewBtn.className = 'download-button';
+        generatePreviewBtn.className = 'generate-preview-button';
         generatePreviewBtn.textContent = '生成预览';
         generatePreviewBtn.disabled = true;
         generatePreviewBtn.onclick = updateGridPreview;

@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         previewContainer.parentNode.insertBefore(generatePreviewBtn, previewContainer);
     }
 
-    // 修改生成排列组合的函数，限制生成6个不同的组合
+    // 优化生成排列组合的函数，降低重复率
     function generateCombinations(arr, size) {
         if (size > arr.length) return [arr];
         const result = [];
@@ -155,36 +155,61 @@ document.addEventListener('DOMContentLoaded', () => {
             return newArray;
         }
         
+        // 计算两个组合的差异度（0-1之间，1表示完全不同）
+        function calculateDifference(combo1, combo2) {
+            let differences = 0;
+            for (let i = 0; i < combo1.length; i++) {
+                if (combo1[i] !== combo2[i]) {
+                    differences++;
+                }
+            }
+            return differences / combo1.length;
+        }
+        
+        // 计算一个组合与现有组合的最小差异度
+        function getMinDifference(newCombo) {
+            if (result.length === 0) return 1;
+            return Math.min(...result.map(existing => calculateDifference(existing, newCombo)));
+        }
+        
         // 生成一个随机组合
         function generateRandomCombination() {
             const shuffled = shuffle(arr);
             return shuffled.slice(0, size);
         }
         
-        // 检查组合是否已存在
-        function isCombinationUnique(newComb) {
-            return !result.some(existing => {
-                return existing.every((item, index) => item === newComb[index]);
-            });
-        }
-        
         // 尝试生成不同的组合
         let attempts = 0;
         const maxAttempts = 100; // 防止无限循环
+        const minDifferenceThreshold = 0.3; // 最小差异度阈值
         
+        // 先添加一个初始组合
+        result.push(generateRandomCombination());
+        
+        // 生成剩余的组合
         while (result.length < maxCombinations && attempts < maxAttempts) {
             const newCombination = generateRandomCombination();
-            if (isCombinationUnique(newCombination)) {
+            const minDiff = getMinDifference(newCombination);
+            
+            // 如果差异度大于阈值，添加这个组合
+            if (minDiff > minDifferenceThreshold) {
                 result.push(newCombination);
+                attempts = 0; // 成功添加后重置尝试次数
+            } else {
+                attempts++;
             }
-            attempts++;
         }
         
-        // 如果生成的组合不足6个，用已有的组合补充
-        while (result.length < maxCombinations) {
-            const randomIndex = Math.floor(Math.random() * result.length);
-            const shuffledCombination = shuffle([...result[randomIndex]]);
-            result.push(shuffledCombination);
+        // 如果生成的组合不足6个，调整差异度阈值继续生成
+        if (result.length < maxCombinations) {
+            const remainingCount = maxCombinations - result.length;
+            const remainingCombos = generateCombinations(arr, size)
+                .filter(combo => !result.some(existing => 
+                    calculateDifference(existing, combo) < 0.1
+                ))
+                .slice(0, remainingCount);
+            
+            result.push(...remainingCombos);
         }
         
         return result;

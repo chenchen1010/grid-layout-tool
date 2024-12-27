@@ -213,25 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // 清空预览区域
         previewContainer.innerHTML = '';
         
-        // 添加全选和下载按钮
-        const actionBar = document.createElement('div');
-        actionBar.className = 'preview-action-bar';
-        
-        const selectAllBtn = document.createElement('button');
-        selectAllBtn.className = 'select-all-button';
-        selectAllBtn.textContent = '全选';
-        selectAllBtn.onclick = toggleSelectAll;
-        
-        const downloadSelectedBtn = document.createElement('button');
-        downloadSelectedBtn.className = 'download-button';
-        downloadSelectedBtn.textContent = '下载选中预览图';
-        downloadSelectedBtn.onclick = downloadSelectedPreviews;
-        downloadSelectedBtn.disabled = true;
-        
-        actionBar.appendChild(selectAllBtn);
-        actionBar.appendChild(downloadSelectedBtn);
-        previewContainer.appendChild(actionBar);
-        
         // 为每个组合创建一个预览
         combinations.forEach((combination, index) => {
             const previewSection = document.createElement('div');
@@ -276,6 +257,27 @@ document.addEventListener('DOMContentLoaded', () => {
             previewSection.appendChild(gridPreview);
             previewContainer.appendChild(previewSection);
         });
+
+        // 添加全选和下载按钮到预览容器下方
+        const actionBar = document.createElement('div');
+        actionBar.className = 'preview-action-bar';
+        
+        const selectAllBtn = document.createElement('button');
+        selectAllBtn.className = 'select-all-button';
+        selectAllBtn.textContent = '全选';
+        selectAllBtn.onclick = toggleSelectAll;
+        
+        const downloadSelectedBtn = document.createElement('button');
+        downloadSelectedBtn.className = 'download-button';
+        downloadSelectedBtn.textContent = '下载选中预览图';
+        downloadSelectedBtn.onclick = downloadSelectedPreviews;
+        downloadSelectedBtn.disabled = true;
+        
+        actionBar.appendChild(selectAllBtn);
+        actionBar.appendChild(downloadSelectedBtn);
+        
+        // 将操作栏添加到预览容器后面
+        previewContainer.parentNode.insertBefore(actionBar, previewContainer.nextSibling);
     }
 
     // 添加全选/取消全选功能

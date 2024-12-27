@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="一个简洁优雅的图片网格布局工具">
+    <meta name="keywords" content="图片网格,图片布局,在线工具">
+    <title>图片网格布局工具</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 标题区域 -->
+        <header class="header">
+            <h1>图片网格布局工具</h1>
+            <p class="subtitle">选择模板，创建完美布局</p>
+        </header>
+
+        <!-- 网格模板选择区 -->
+        <section class="template-section">
+            <h2>选择布局模板</h2>
+            <div class="template-scroll">
+                <div class="template-grid">
+                    <!-- 模板将通过 JavaScript 动态生成 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 主要内容区 -->
+        <main class="main-content">
+            <!-- 图片上传和预览区域 -->
+            <div class="upload-section">
+                <div class="upload-card">
+                    <div class="upload-area" id="imageUpload" data-state="empty">
+                        <input type="file" id="imageInput" accept="image/png,image/jpeg" multiple hidden>
+                        <label for="imageInput" class="upload-label">
+                            <div class="upload-content">
+                                <svg class="upload-icon" width="40" height="40" viewBox="0 0 40 40">
+                                    <path d="M20 8v24M8 20h24" stroke="currentColor" stroke-width="2" fill="none"/>
+                                </svg>
+                                <span class="upload-text">点击或拖放图片到这里</span>
+                                <span class="upload-hint">支持 PNG、JPG 格式</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="preview-box">
+                        <div class="preview-header">
+                            <h3>图片预览</h3>
+                            <span class="selected-count" id="selectedCount">已选择: 0</span>
+                        </div>
+                        <div class="images-grid" id="imagesList">
+                            <!-- 图片预览将通过 JavaScript 动态生成 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 合成预览区域 -->
+            <div class="preview-section">
+                <div class="preview-container">
+                    <h3>布局预览</h3>
+                    <div class="grid-preview" id="gridPreview">
+                        <!-- 网格预览将通过 JavaScript 动态生成 -->
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button id="resetBtn" class="reset-button" disabled>重置布局</button>
+                    <button id="downloadBtn" class="download-button" disabled>下载合成图片</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 

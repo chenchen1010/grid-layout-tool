@@ -139,28 +139,54 @@ document.addEventListener('DOMContentLoaded', () => {
         previewContainer.parentNode.insertBefore(generatePreviewBtn, previewContainer);
     }
 
-    // 添加一个生成排列组合的函数
+    // 修改生成排列组合的函数，限制生成6个不同的组合
     function generateCombinations(arr, size) {
         if (size > arr.length) return [arr];
         const result = [];
+        const maxCombinations = 6; // 限制生成6个组合
         
-        function permute(arr, temp = [], used = new Set()) {
-            if (temp.length === size) {
-                result.push([...temp]);
-                return;
+        // 随机打乱数组函数
+        function shuffle(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
             }
-            
-            for (let i = 0; i < arr.length; i++) {
-                if (used.has(i)) continue;
-                temp.push(arr[i]);
-                used.add(i);
-                permute(arr, temp, used);
-                temp.pop();
-                used.delete(i);
-            }
+            return newArray;
         }
         
-        permute(arr);
+        // 生成一个随机组合
+        function generateRandomCombination() {
+            const shuffled = shuffle(arr);
+            return shuffled.slice(0, size);
+        }
+        
+        // 检查组合是否已存在
+        function isCombinationUnique(newComb) {
+            return !result.some(existing => {
+                return existing.every((item, index) => item === newComb[index]);
+            });
+        }
+        
+        // 尝试生成不同的组合
+        let attempts = 0;
+        const maxAttempts = 100; // 防止无限循环
+        
+        while (result.length < maxCombinations && attempts < maxAttempts) {
+            const newCombination = generateRandomCombination();
+            if (isCombinationUnique(newCombination)) {
+                result.push(newCombination);
+            }
+            attempts++;
+        }
+        
+        // 如果生成的组合不足6个，用已有的组合补充
+        while (result.length < maxCombinations) {
+            const randomIndex = Math.floor(Math.random() * result.length);
+            const shuffledCombination = shuffle([...result[randomIndex]]);
+            result.push(shuffledCombination);
+        }
+        
         return result;
     }
 

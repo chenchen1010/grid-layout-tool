@@ -243,12 +243,23 @@ document.addEventListener('DOMContentLoaded', () => {
             previewSection.appendChild(checkbox);
             
             const gridPreview = document.createElement('div');
+
+            // 设置预览网格的 CSS 类名
             gridPreview.className = 'grid-preview';
+            // 设置显示模式为网格布局
             gridPreview.style.display = 'grid';
+            // 设置网格的行数，使用 1fr 使所有行等高
             gridPreview.style.gridTemplateRows = `repeat(${selectedTemplate.rows}, 1fr)`;
+            // 设置网格的列数，使用 1fr 使所有列等宽
             gridPreview.style.gridTemplateColumns = `repeat(${selectedTemplate.cols}, 1fr)`;
+            // 设置网格单元格之间的间距为 4 像素
             gridPreview.style.gap = '4px';
-            gridPreview.style.marginBottom = '2rem';
+            // 设置网格底部外边距为 2rem
+            //gridPreview.style.marginBottom = '2rem';
+
+
+
+
             
             // 填充网格
             for (let i = 0; i < selectedTemplate.cells; i++) {
@@ -379,18 +390,57 @@ document.addEventListener('DOMContentLoaded', () => {
                     const x = col * (cellWidth + gap);
                     const y = row * (cellHeight + gap);
 
+                    // 创建临时画布用于裁剪
                     const tempCanvas = document.createElement('canvas');
                     const tempCtx = tempCanvas.getContext('2d');
                     tempCanvas.width = cellWidth;
                     tempCanvas.height = cellHeight;
 
                     if (img.complete) {
-                        tempCtx.drawImage(img, 0, 0, cellWidth, cellHeight);
+                        // 计算裁剪区域
+                        const aspectRatio = img.naturalWidth / img.naturalHeight;
+                        let sw, sh, sx, sy;
+                        
+                        if (aspectRatio > 1) {
+                            // 横向图片
+                            sh = img.naturalHeight;
+                            sw = sh;
+                            sx = (img.naturalWidth - sw) / 2;
+                            sy = 0;
+                        } else {
+                            // 纵向图片
+                            sw = img.naturalWidth;
+                            sh = sw;
+                            sx = 0;
+                            sy = (img.naturalHeight - sh) / 2;
+                        }
+
+                        // 裁剪并绘制图片
+                        tempCtx.drawImage(img, sx, sy, sw, sh, 0, 0, cellWidth, cellHeight);
                         ctx.drawImage(tempCanvas, x, y);
                         resolve();
                     } else {
                         img.onload = () => {
-                            tempCtx.drawImage(img, 0, 0, cellWidth, cellHeight);
+                            // 计算裁剪区域
+                            const aspectRatio = img.naturalWidth / img.naturalHeight;
+                            let sw, sh, sx, sy;
+                            
+                            if (aspectRatio > 1) {
+                                // 横向图片
+                                sh = img.naturalHeight;
+                                sw = sh;
+                                sx = (img.naturalWidth - sw) / 2;
+                                sy = 0;
+                            } else {
+                                // 纵向图片
+                                sw = img.naturalWidth;
+                                sh = sw;
+                                sx = 0;
+                                sy = (img.naturalHeight - sh) / 2;
+                            }
+
+                            // 裁剪并绘制图片
+                            tempCtx.drawImage(img, sx, sy, sw, sh, 0, 0, cellWidth, cellHeight);
                             ctx.drawImage(tempCanvas, x, y);
                             resolve();
                         };
@@ -401,6 +451,82 @@ document.addEventListener('DOMContentLoaded', () => {
             Promise.all(drawPromises).then(() => {
                 resolve(canvas.toDataURL('image/png'));
             });
+        });
+    }
+
+    // 添加下载单个预览图的函数
+    function createAndDownloadImage(gridPreview) {
+        const canvas = document.createElement('canvas');
+        const width = 3000;
+        canvas.width = width;
+        canvas.height = (width / 3) * 4;
+
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const cellWidth = canvas.width / selectedTemplate.cols;
+        const cellHeight = canvas.height / selectedTemplate.rows;
+        const gap = Math.floor(width / 750);
+
+        const drawPromises = Array.from(gridPreview.querySelectorAll('.grid-cell')).map((cell, index) => {
+            return new Promise((resolve) => {
+                const img = cell.querySelector('img');
+                if (!img) {
+                    resolve();
+                    return;
+                }
+
+                const row = Math.floor(index / selectedTemplate.cols);
+                const col = index % selectedTemplate.cols;
+                const x = col * (cellWidth + gap);
+                const y = row * (cellHeight + gap);
+
+                // 创建临时 canvas 用于裁切图片
+                const tempCanvas = document.createElement('canvas');
+                const tempCtx = tempCanvas.getContext('2d');
+                tempCanvas.width = cellWidth;
+                tempCanvas.height = cellHeight;
+
+                // 计算裁切参数
+                const imgRatio = img.naturalWidth / img.naturalHeight;
+                const cellRatio = cellWidth / cellHeight;
+                let sWidth, sHeight, sx, sy;
+
+                if (imgRatio > cellRatio) {
+                    // 图片更宽，需要裁切两边
+                    sHeight = img.naturalHeight;
+                    sWidth = sHeight * cellRatio;
+                    sx = (img.naturalWidth - sWidth) / 2;
+                    sy = 0;
+                } else {
+                    // 图片更高，需要裁切上下
+                    sWidth = img.naturalWidth;
+                    sHeight = sWidth / cellRatio;
+                    sx = 0;
+                    sy = (img.naturalHeight - sHeight) / 2;
+                }
+
+                // 绘制裁切后的图片
+                if (img.complete) {
+                    tempCtx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, cellWidth, cellHeight);
+                    ctx.drawImage(tempCanvas, x, y);
+                    resolve();
+                } else {
+                    img.onload = () => {
+                        tempCtx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, cellWidth, cellHeight);
+                        ctx.drawImage(tempCanvas, x, y);
+                        resolve();
+                    };
+                }
+            });
+        });
+
+        Promise.all(drawPromises).then(() => {
+            const link = document.createElement('a');
+            link.download = `grid-image-${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
         });
     }
 
@@ -500,4 +626,85 @@ document.addEventListener('DOMContentLoaded', () => {
         imageUpload.dataset.state = 'empty';
         handleFiles(e.dataTransfer.files);
     });
+
+    async function loadGridImage(cell, imageUrl) {
+        try {
+            // 创建一个临时的 canvas 元素
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 设置预览图的尺寸（可以根据实际需求调整）
+            canvas.width = 150;
+            canvas.height = 150;
+            
+            // 创建新的图片元素
+            const img = document.createElement('img');
+            
+            // 使用 fetch 获取图片数据
+            const response = await fetch(imageUrl);
+            const blob = await response.blob();
+            
+            // 创建缩略图的 Blob URL
+            const thumbnailUrl = URL.createObjectURL(blob);
+            
+            return new Promise((resolve, reject) => {
+                img.onload = () => {
+                    // 计算裁剪参数
+                    const aspectRatio = img.naturalWidth / img.naturalHeight;
+                    let sx, sy, sw, sh;
+                    
+                    if (aspectRatio > 1) {
+                        // 横向图片
+                        sh = img.naturalHeight;
+                        sw = sh;
+                        sx = (img.naturalWidth - sw) / 2;
+                        sy = 0;
+                    } else {
+                        // 纵向图片
+                        sw = img.naturalWidth;
+                        sh = sw;
+                        sx = 0;
+                        sy = (img.naturalHeight - sh) / 2;
+                    }
+                    
+                    // 在 canvas 上绘制裁剪后的图片
+                    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+                    
+                    // 转换为较小尺寸的 Blob
+                    canvas.toBlob((thumbnailBlob) => {
+                        // 释放原始的 Blob URL
+                        URL.revokeObjectURL(thumbnailUrl);
+                        
+                        // 创建缩略图的新 URL
+                        const finalThumbnailUrl = URL.createObjectURL(thumbnailBlob);
+                        
+                        // 设置最终的缩略图
+                        const finalImg = document.createElement('img');
+                        finalImg.src = finalThumbnailUrl;
+                        finalImg.dataset.originalUrl = imageUrl; // 保存原始URL以供后续使用
+                        cell.appendChild(finalImg);
+                        
+                        resolve(finalImg);
+                    }, 'image/jpeg', 0.8); // 使用 JPEG 格式，质量为 0.8
+                };
+                
+                img.onerror = reject;
+                img.src = thumbnailUrl;
+            });
+        } catch (error) {
+            console.error('加载预览图失败:', error);
+        }
+    }
+
+    // 在下载完整图片时使用原始URL
+    async function downloadFullImage() {
+        const cells = document.querySelectorAll('.grid-cell img');
+        for (const img of cells) {
+            const originalUrl = img.dataset.originalUrl;
+            if (originalUrl) {
+                // 使用原始URL下载完整图片的逻辑
+                // ...
+            }
+        }
+    }
 }); 

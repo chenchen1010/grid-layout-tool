@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
         downloadBtn.textContent = `下载选中预览图 (${selectedCount})`;
     }
 
-    // 下载选中的预览图
+    // 修改下载选中的预览图函数
     function downloadSelectedPreviews() {
         const selectedPreviews = document.querySelectorAll('.preview-checkbox:checked');
         
@@ -343,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const promises = Array.from(selectedPreviews).map((checkbox, index) => {
                 return new Promise(resolve => {
                     const gridPreview = checkbox.closest('.preview-section').querySelector('.grid-preview');
-                    createAndDownloadImage(gridPreview).then(dataUrl => {
+                    createPreviewImage(gridPreview).then(dataUrl => {
                         zip.file(`grid-image-${index + 1}.png`, dataUrl.split(',')[1], {base64: true});
                         resolve();
                     });
@@ -390,57 +390,38 @@ document.addEventListener('DOMContentLoaded', () => {
                     const x = col * (cellWidth + gap);
                     const y = row * (cellHeight + gap);
 
-                    // 创建临时画布用于裁剪
+                    // 创建临时 canvas 用于裁切图片
                     const tempCanvas = document.createElement('canvas');
                     const tempCtx = tempCanvas.getContext('2d');
                     tempCanvas.width = cellWidth;
                     tempCanvas.height = cellHeight;
 
-                    if (img.complete) {
-                        // 计算裁剪区域
-                        const aspectRatio = img.naturalWidth / img.naturalHeight;
-                        let sw, sh, sx, sy;
-                        
-                        if (aspectRatio > 1) {
-                            // 横向图片
-                            sh = img.naturalHeight;
-                            sw = sh;
-                            sx = (img.naturalWidth - sw) / 2;
-                            sy = 0;
-                        } else {
-                            // 纵向图片
-                            sw = img.naturalWidth;
-                            sh = sw;
-                            sx = 0;
-                            sy = (img.naturalHeight - sh) / 2;
-                        }
+                    // 计算裁切参数
+                    const imgRatio = img.naturalWidth / img.naturalHeight;
+                    const cellRatio = cellWidth / cellHeight;
+                    let sWidth, sHeight, sx, sy;
 
-                        // 裁剪并绘制图片
-                        tempCtx.drawImage(img, sx, sy, sw, sh, 0, 0, cellWidth, cellHeight);
+                    if (imgRatio > cellRatio) {
+                        // 图片更宽，需要裁切两边
+                        sHeight = img.naturalHeight;
+                        sWidth = sHeight * cellRatio;
+                        sx = (img.naturalWidth - sWidth) / 2;
+                        sy = 0;
+                    } else {
+                        // 图片更高，需要裁切上下
+                        sWidth = img.naturalWidth;
+                        sHeight = sWidth / cellRatio;
+                        sx = 0;
+                        sy = (img.naturalHeight - sHeight) / 2;
+                    }
+
+                    if (img.complete) {
+                        tempCtx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, cellWidth, cellHeight);
                         ctx.drawImage(tempCanvas, x, y);
                         resolve();
                     } else {
                         img.onload = () => {
-                            // 计算裁剪区域
-                            const aspectRatio = img.naturalWidth / img.naturalHeight;
-                            let sw, sh, sx, sy;
-                            
-                            if (aspectRatio > 1) {
-                                // 横向图片
-                                sh = img.naturalHeight;
-                                sw = sh;
-                                sx = (img.naturalWidth - sw) / 2;
-                                sy = 0;
-                            } else {
-                                // 纵向图片
-                                sw = img.naturalWidth;
-                                sh = sw;
-                                sx = 0;
-                                sy = (img.naturalHeight - sh) / 2;
-                            }
-
-                            // 裁剪并绘制图片
-                            tempCtx.drawImage(img, sx, sy, sw, sh, 0, 0, cellWidth, cellHeight);
+                            tempCtx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, cellWidth, cellHeight);
                             ctx.drawImage(tempCanvas, x, y);
                             resolve();
                         };

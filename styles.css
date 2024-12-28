@@ -1,414 +1,526 @@
 /* 全局样式 */
-:root {
-    --primary-color: #007AFF;
-    --background-color: #F5F5F7;
-    --text-color: #1D1D1F;
-    --border-radius: 12px;
+:root { /* 定义CSS变量（自定义属性）的根作用域 */
+    --primary-color: #007AFF; /* 定义主题色为蓝色 */
+    --background-color: #F5F5F7; /* 定义背景色为浅灰色 */
+    --text-color: #1D1D1F; /* 定义文本颜色为深灰色 */
+    --border-radius: 12px; /* 定义统一的边框圆角大小 */
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* { /* 全局重置所有元素的默认样式 */
+    margin: 0; /* 移除所有元素的外边距 */
+    padding: 0; /* 移除所有元素的内边距 */
+    box-sizing: border-box; /* 使用border-box盒模型 */
 }
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    line-height: 1.5;
+body { /* 设置页面主体样式 */
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif; /* 设置字体族，优先使用系统字体 */
+    background-color: var(--background-color); /* 使用变量设置背景色 */
+    color: var(--text-color); /* 使用变量设置文本颜色 */
+    line-height: 1.5; /* 设置行高为1.5倍 */
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
+.container { /* 页面主容器样式 */
+    max-width: 1200px; /* 设置最大宽度为1200像素 */
+    margin: 0 auto; /* 水平居中对齐 */
+    padding: 2rem; /* 设置内边距为2rem */
 }
 
 /* 头部样式 */
-.header {
-    text-align: center;
-    margin-bottom: 3rem;
+.header { /* 页面头部样式 */
+    text-align: center; /* 文本居中对齐 */
+    margin-bottom: 3rem; /* 底部外边距为3rem */
 }
 
-.header h1 {
-    font-size: 2.5rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+.header h1 { /* 头部标题样式 */
+    font-size: 2.5rem; /* 字体大小为2.5rem */
+    font-weight: 600; /* 字体粗细为600 */
+    margin-bottom: 0.5rem; /* 底部外边距为0.5rem */
 }
 
-.subtitle {
-    color: #86868B;
-    font-size: 1.1rem;
+.subtitle { /* 副标题样式 */
+    color: #86868B; /* 设置颜色为灰色 */
+    font-size: 1.1rem; /* 字体大小为1.1rem */
 }
 
 /* 上传区域样式 */
-.upload-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
+.upload-section { /* 上传区域容器样式 */
+    display: grid; /* 使用网格布局 */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 自适应列宽，最小300px */
+    gap: 2rem; /* 网格间距为2rem */
+    margin-bottom: 2rem; /* 底部外边距为2rem */
 }
 
-.upload-card {
-    background: white;
-    border-radius: var(--border-radius);
-    padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.upload-card { /* 上传卡片样式 */
+    background: white; /* 背景色为白色 */
+    border-radius: var(--border-radius); /* 使用变量设置圆角 */
+    padding: 2rem; /* 内边距为2rem */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
 }
 
-.upload-area {
-    border: 2px dashed var(--primary-color);
-    border-radius: var(--border-radius);
-    padding: 2rem;
-    transition: all 0.3s ease;
-    background-color: rgba(0, 122, 255, 0.05);
-    position: relative;
-    min-height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.upload-area { /* 上传区域样式 */
+    border: 2px dashed var(--primary-color); /* 虚线边框，使用主题色 */
+    border-radius: var(--border-radius); /* 使用变量设置圆角 */
+    padding: 2rem; /* 内边距为2rem */
+    transition: all 0.3s ease; /* 添加过渡动画 */
+    background-color: rgba(0, 122, 255, 0.05); /* 设置半透明背景色 */
+    position: relative; /* 设置相对定位 */
+    min-height: 200px; /* 最小高度为200px */
+    display: flex; /* 使用弹性布局 */
+    align-items: center; /* 垂直居中对齐 */
+    justify-content: center; /* 水平居中对齐 */
 }
 
-.upload-area[data-state="dragover"] {
-    background-color: rgba(0, 122, 255, 0.1);
-    border-color: var(--primary-color);
-    transform: scale(1.02);
+.upload-area[data-state="dragover"] { /* 拖拽状态样式 */
+    background-color: rgba(0, 122, 255, 0.1); /* 拖拽时背景色加深 */
+    border-color: var(--primary-color); /* 边框使用主题色 */
+    transform: scale(1.02); /* 放大效果 */
 }
 
-.upload-label {
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.upload-label { /* 上传标签样式 */
+    cursor: pointer; /* 鼠标指针变为手型 */
+    width: 100%; /* 宽度100% */
+    height: 100%; /* 高度100% */
+    display: flex; /* 使用弹性布局 */
+    align-items: center; /* 垂直居中对齐 */
+    justify-content: center; /* 水平居中对齐 */
 }
 
-.upload-content {
-    text-align: center;
+.upload-content { /* 上传内容样式 */
+    text-align: center; /* 文本居中对齐 */
 }
 
-.upload-icon {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
+.upload-icon { /* 上传图标样式 */
+    color: var(--primary-color); /* 使用主题色 */
+    margin-bottom: 1rem; /* 底部外边距为1rem */
 }
 
-.upload-text {
-    display: block;
-    font-size: 1.1rem;
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
+.upload-text { /* 上传文本样式 */
+    display: block; /* 设置为块级元素 */
+    font-size: 1.1rem; /* 字体大小为1.1rem */
+    color: var(--primary-color); /* 使用主题色 */
+    margin-bottom: 0.5rem; /* 底部外边距为0.5rem */
 }
 
-.upload-hint {
-    display: block;
-    font-size: 0.9rem;
-    color: #86868B;
+.upload-hint { /* 上传提示文本样式 */
+    display: block; /* 设置为块级元素 */
+    font-size: 0.9rem; /* 字体大小为0.9rem */
+    color: #86868B; /* 设置颜色为灰色 */
 }
 
 /* 预览区域样式 */
-.images-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
-    max-height: 400px;
-    overflow-y: auto;
+.images-grid { /* 图片网格容器样式 */
+    display: grid; /* 使用网格布局 */
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* 自适应列宽，最小120px */
+    gap: 1rem; /* 网格间距为1rem */
+    padding: 1rem; /* 内边距为1rem */
+    max-height: 400px; /* 最大高度为400px */
+    overflow-y: auto; /* 垂直方向可滚动 */
 }
 
-.preview-image {
-    position: relative;
-    aspect-ratio: 1;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    background: #F5F5F7;
-    cursor: pointer;
-    transition: transform 0.2s ease;
+.preview-image { /* 预览图片容器样式 */
+    position: relative; /* 设置相对定位 */
+    aspect-ratio: 1; /* 宽高比为1:1 */
+    border-radius: var(--border-radius); /* 使用变量设置圆角 */
+    overflow: hidden; /* 隐藏溢出内容 */
+    background: #F5F5F7; /* 背景色为浅灰色 */
+    cursor: pointer; /* 鼠标指针变为手型 */
+    transition: transform 0.2s ease; /* 添加变换动画 */
 }
 
-.preview-image:hover {
-    transform: translateY(-2px);
+.preview-image:hover { /* 预览图片悬停状态 */
+    transform: translateY(-2px); /* 向上移动2px */
 }
 
-.preview-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.preview-image img { /* 预览图片样式 */
+    width: 100%; /* 宽度100% */
+    height: 100%; /* 高度100% */
+    object-fit: cover; /* 图片填充方式为cover */
 }
 
-.preview-image.selected {
-    border: 2px solid var(--primary-color);
+.preview-image.selected { /* 选中状态的预览图片 */
+    border: 2px solid var(--primary-color); /* 边框使用主题色 */
 }
 
-.delete-btn {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    width: 24px;
-    height: 24px;
-    background: rgba(255, 59, 48, 0.9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.2s ease;
+.delete-btn { /* 删除按钮样式 */
+    position: absolute; /* 绝对定位 */
+    top: 8px; /* 距顶部8px */
+    left: 8px; /* 距左侧8px */
+    width: 24px; /* 宽度24px */
+    height: 24px; /* 高度24px */
+    background: rgba(255, 59, 48, 0.9); /* 半透明红色背景 */
+    border-radius: 50%; /* 圆形边框 */
+    display: flex; /* 使用弹性布局 */
+    align-items: center; /* 垂直居中对齐 */
+    justify-content: center; /* 水平居中对齐 */
+    color: white; /* 文字颜色为白色 */
+    cursor: pointer; /* 鼠标指针变为手型 */
+    opacity: 0; /* 默认透明 */
+    transition: opacity 0.2s ease; /* 添加透明度过渡动画 */
 }
 
-.preview-image:hover .delete-btn {
-    opacity: 1;
+.preview-image:hover .delete-btn { /* 预览图片悬停时显示删除按钮 */
+    opacity: 1; /* 完全不透明 */
 }
 
 /* 下载按钮样式 */
-.download-button {
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: var(--border-radius);
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.2s ease;
+.download-button { /* 下载按钮样式 */
+    background: var(--primary-color); /* 使用主题色作为背景 */
+    color: white; /* 文字颜色为白色 */
+    border: none; /* 移除边框 */
+    padding: 1rem 2rem; /* 内边距上下1rem，左右2rem */
+    border-radius: var(--border-radius); /* 使用变量设置圆角 */
+    font-size: 1rem; /* 字体大小为1rem */
+    font-weight: 500; /* 字体粗细为500 */
+    cursor: pointer; /* 鼠标指针变为手型 */
+    width: 100%; /* 宽度100% */
+    transition: background-color 0.2s ease; /* 添加背景色过渡动画 */
 }
 
-.download-button:hover {
-    background-color: #0056b3;
+.download-button:hover { /* 下载按钮悬停状态 */
+    background-color: #0056b3; /* 悬停时背景色变深 */
 }
 
-.download-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+.download-button:disabled { /* 下载按钮禁用状态 */
+    background-color: #ccc; /* 背景色变为灰色 */
+    cursor: not-allowed; /* 鼠标指针变为禁止 */
 }
 
 /* 添加底图列表样式 */
-.base-images-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
+.base-images-list { /* 底图列表容器样式 */
+    display: grid; /* 使用网格布局 */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* 自适应列宽，最小150px */
+    gap: 1rem; /* 网格间距为1rem */
+    margin-top: 1rem; /* 顶部外边距为1rem */
 }
 
-.base-images-list .preview-image {
-    height: 150px;
-    position: relative;
+.base-images-list .preview-image { /* 底图列表中的预览图片样式 */
+    height: 150px; /* 高度150px */
+    position: relative; /* 设置相对定位 */
 }
 
-.base-images-list .preview-image.selected {
-    border: 2px solid var(--primary-color);
+.base-images-list .preview-image.selected { /* 底图列表中选中的预览图片样式 */
+    border: 2px solid var(--primary-color); /* 边框使用主题色 */
 }
 
-.base-images-list .preview-image:hover::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 122, 255, 0.1);
-    border-radius: var(--border-radius);
-    cursor: pointer;
+.base-images-list .preview-image:hover::before { /* 底图列表中预览图片悬停效果 */
+    content: ''; /* 添加空内容 */
+    position: absolute; /* 绝对定位 */
+    top: 0; /* 距顶部0 */
+    left: 0; /* 距左侧0 */
+    right: 0; /* 距右侧0 */
+    bottom: 0; /* 距底部0 */
+    background: rgba(0, 122, 255, 0.1); /* 半透明背景 */
+    border-radius: var(--border-radius); /* 使用变量设置圆角 */
+    cursor: pointer; /* 鼠标指针变为手型 */
 }
 
 /* 添加合成图片网格样式 */
-.merged-images-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1rem;
+.merged-images-grid { /* 合成图片网格容器样式 */
+    display: grid; /* 使用网格布局 */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 自适应列宽，最小200px */
+    gap: 1.5rem; /* 网格间距为1.5rem */
+    margin-top: 1rem; /* 顶部外边距为1rem */
 }
 
-.merged-image-item {
-    position: relative;
-    background: #F5F5F7;
-    border-radius: var(--border-radius);
-    overflow: hidden;
+.merged-image-item { /* 合成图片项样式 */
+    position: relative; /* 设置相对定位 */
+    background: #F5F5F7; /* 背景色为浅灰色 */
+    border-radius: var(--border-radius); /* 使用变量设置圆角 */
+    overflow: hidden; /* 隐藏溢出内容 */
 }
 
-.merged-image-item .preview-image {
-    height: 200px;
-    margin: 0;
+.merged-image-item .preview-image { /* 合成图片项中的预览图片样式 */
+    height: 200px; /* 高度200px */
+    margin: 0; /* 移除外边距 */
 }
 
-.merged-image-item .download-single {
-    position: absolute;
-    bottom: 0.5rem;
-    right: 0.5rem;
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 0.5rem;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.2s ease;
+.merged-image-item .download-single { /* 合成图片项中的单个下载按钮样式 */
+    position: relative; /* 相对定位 */
+    display: block; /* 设置为块级元素 */
+    margin: 0.5rem auto; /* 上下外边距0.5rem，左右自动居中 */
+    background: var(--primary-color); /* 使用主题色作为背景 */
+    color: white; /* 文字颜色为白色 */
+    border: none; /* 移除边框 */
+    padding: 0.5rem; /* 内边距为0.5rem */
+    border-radius: var(--border-radius); /* 使用变量设置圆角 */
+    cursor: pointer; /* 鼠标指针变为手型 */
+    opacity: 0; /* 默认透明 */
+    transition: opacity 0.2s ease; /* 添加透明度过渡动画 */
 }
 
-.merged-image-item:hover .download-single {
-    opacity: 1;
+.merged-image-item:hover .download-single { /* 合成图片项悬停时显示下载按钮 */
+    opacity: 1; /* 完全不透明 */
 }
 
 /* 添加素材图列表样式 */
-.overlay-images-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
+.overlay-images-list { /* 素材图列表容器样式 */
+    display: grid; /* 使用网格布局 */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* 自适应列宽，最小150px */
+    gap: 1rem; /* 网格间距为1rem */
+    margin-top: 1rem; /* 顶部外边距为1rem */
 }
 
-.overlay-item {
-    position: relative;
-    cursor: pointer;
+.overlay-item { /* 素材项样式 */
+    position: relative; /* 设置相对定位 */
+    cursor: pointer; /* 鼠标指针变为手型 */
 }
 
-.overlay-item .preview-image {
-    height: 150px;
-    transition: all 0.2s ease;
+.overlay-item .preview-image { /* 素材项中的预览图片样式 */
+    height: 150px; /* 高度150px */
+    transition: all 0.2s ease; /* 添加过渡动画 */
 }
 
-.overlay-item .checkbox {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--primary-color);
-    border-radius: 4px;
-    background: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.overlay-item .checkbox { /* 素材项中的复选框样式 */
+    position: absolute; /* 绝对定位 */
+    top: 0.5rem; /* 距顶部0.5rem */
+    right: 0.5rem; /* 距右侧0.5rem */
+    width: 20px; /* 宽度20px */
+    height: 20px; /* 高度20px */
+    border: 2px solid var(--primary-color); /* 边框使用主题色 */
+    border-radius: 4px; /* 圆角4px */
+    background: white; /* 背景色为白色 */
+    display: flex; /* 使用弹性布局 */
+    align-items: center; /* 垂直居中对齐 */
+    justify-content: center; /* 水平居中对齐 */
 }
 
-.overlay-item.selected .checkbox::after {
-    content: '✓';
-    color: var(--primary-color);
-    font-size: 14px;
+.overlay-item.selected .checkbox::after { /* 选中状态的复选框样式 */
+    content: '✓'; /* 添加勾选符号 */
+    color: var(--primary-color); /* 使用主题色 */
+    font-size: 14px; /* 字体大小14px */
 }
 
-.overlay-item.selected .preview-image {
-    border: 2px solid var(--primary-color);
+.overlay-item.selected .preview-image { /* 选中状态的预览图片样式 */
+    border: 2px solid var(--primary-color); /* 边框使用主题色 */
 }
 
 /* 修改删除按钮样式 */
-.delete-btn {
-    position: absolute;
-    top: 0.5rem;
-    left: 0.5rem;
-    width: 24px;
-    height: 24px;
-    background: rgba(255, 59, 48, 0.9);
-    border-radius: 50%;
-    color: white;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    line-height: 1;
-    padding-bottom: 2px; /* 微调垂直居中 */
-    z-index: 1; /* 确保删除按钮显示在图片上层 */
+.delete-btn { /* 删除按钮样式 */
+    position: absolute; /* 绝对定位 */
+    top: 0.5rem; /* 距顶部0.5rem */
+    left: 0.5rem; /* 距左侧0.5rem */
+    width: 24px; /* 宽度24px */
+    height: 24px; /* 高度24px */
+    background: rgba(255, 59, 48, 0.9); /* 半透明红色背景 */
+    border-radius: 50%; /* 圆形边框 */
+    color: white; /* 文字颜色为白色 */
+    font-size: 18px; /* 字体大小18px */
+    display: flex; /* 使用弹性布局 */
+    align-items: center; /* 垂直居中对齐 */
+    justify-content: center; /* 水平居中对齐 */
+    cursor: pointer; /* 鼠标指针变为手型 */
+    opacity: 0; /* 默认透明 */
+    transition: opacity 0.2s ease; /* 添加透明度过渡动画 */
+    line-height: 1; /* 行高为1 */
+    padding-bottom: 2px; /* 底部内边距2px */
+    z-index: 1; /* 设置层级为1 */
 }
 
 .preview-image:hover .delete-btn,
-.overlay-item:hover .delete-btn {
-    opacity: 1;
+.overlay-item:hover .delete-btn { /* 预览图片和素材项悬停时显示删除按钮 */
+    opacity: 1; /* 完全不透明 */
 }
 
 /* 修改预览图片容器样式 */
 .preview-image,
-.overlay-item {
-    position: relative;
-    overflow: visible; /* 允许删除按钮溢出容器 */
+.overlay-item { /* 预览图片和素材项容器样式 */
+    position: relative; /* 设置相对定位 */
+    overflow: visible; /* 允许内容溢出 */
 }
 
 /* 确保图片不会遮挡删除按钮 */
-.preview-image img {
-    position: relative;
-    z-index: 0;
+.preview-image img { /* 预览图片样式 */
+    position: relative; /* 设置相对定位 */
+    z-index: 0; /* 设置层级为0 */
 }
 
 /* 网格模板选择区样式 */
-.template-section {
-    margin-bottom: 2rem;
+.template-section { /* 模板选择区容器样式 */
+    margin-bottom: 2rem; /* 底部外边距为2rem */
 }
 
-.template-section h2 {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    color: var(--text-color);
+.template-section h2 { /* 模板选择区标题样式 */
+    font-size: 1.2rem; /* 字体大小1.2rem */
+    margin-bottom: 1rem; /* 底部外边距为1rem */
+    color: var(--text-color); /* 使用变量设置文本颜色 */
 }
 
-.template-scroll {
-    overflow-x: auto;
-    padding: 0.5rem 0;
-    margin: 0 -2rem;
-    -webkit-overflow-scrolling: touch;
+.template-scroll { /* 模板滚动容器样式 */
+    overflow-x: auto; /* 水平方向可滚动 */
+    padding: 0.5rem 0; /* 上下内边距0.5rem */
+    margin: 0 -2rem; /* 左右外边距-2rem */
+    -webkit-overflow-scrolling: touch; /* 启用触摸设备的滚动 */
 }
 
-.template-grid {
-    display: flex;
-    gap: 1rem;
-    padding: 0 2rem;
-    min-width: min-content;
+.template-grid { /* 模板网格容器样式 */
+    display: flex; /* 使用弹性布局 */
+    gap: 1rem; /* 间距为1rem */
+    padding: 0 2rem; /* 左右内边距2rem */
+    min-width: min-content; /* 最小宽度为内容宽度 */
 }
 
-.template-item {
-    flex: 0 0 120px;
-    aspect-ratio: 1;
-    background: white;
-    border-radius: var(--border-radius);
-    padding: 0.5rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: 2px solid transparent;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+.template-item { /* 模板项样式 */
+    flex: 0 0 120px; /* 固定宽度120px */
+    aspect-ratio: 1; /* 宽高比1:1 */
+    background: white; /* 背景色为白色 */
+    border-radius: var(--border-radius); /* 使用变量设置圆角 */
+    padding: 0.5rem; /* 内边距0.5rem */
+    cursor: pointer; /* 鼠标指针变为手型 */
+    transition: all 0.2s ease; /* 添加过渡动画 */
+    border: 2px solid transparent; /* 透明边框 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 添加阴影效果 */
 }
 
-.template-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.template-item:hover { /* 模板项悬停状态 */
+    transform: translateY(-2px); /* 向上移动2px */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 增加阴影效果 */
 }
 
-.template-item.selected {
-    border-color: var(--primary-color);
-    background-color: rgba(0, 122, 255, 0.05);
+.template-item.selected { /* 选中的模板项样式 */
+    border-color: var(--primary-color); /* 边框使用主题色 */
+    background-color: rgba(0, 122, 255, 0.05); /* 半透明背景 */
 }
 
-.template-preview {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    gap: 2px;
-    background: #E5E5EA;
-    border-radius: calc(var(--border-radius) - 4px);
-    padding: 4px;
+.template-preview { /* 模板预览样式 */
+    width: 100%; /* 宽度100% */
+    height: 100%; /* 高度100% */
+    display: grid; /* 使用网格布局 */
+    gap: 2px; /* 网格间距2px */
+    background: #E5E5EA; /* 背景色为浅灰色 */
+    border-radius: calc(var(--border-radius) - 4px); /* 计算圆角大小 */
+    padding: 4px; /* 内边距4px */
 }
 
-.template-cell {
-    background: #C7C7CC;
-    border-radius: 2px;
+.template-cell { /* 模板单元格样式 */
+    background: #C7C7CC; /* 背景色为灰色 */
+    border-radius: 2px; /* 圆角2px */
 }
 
 /* 布局预览区域样式 */
-.preview-section {
-    background: white;
-    border-radius: var(--border-radius);
-    padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 2rem;
+.preview-section { /* 预览区域容器样式 */
+    background: white; /* 背景色为白色 */
+    border-radius: var(--border-radius); /* 使用变量设置圆角 */
+    padding: 2rem; /* 内边距2rem */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+    margin-top: 2rem; /* 顶部外边距2rem */
 }
 
-.preview-container {
-    margin-bottom: 2rem;
+.preview-container { /* 预览容器样式 */
+    margin-bottom: 2rem; /* 底部外边距2rem */
 }
 
+.grid-preview { /* 网格预览样式 */
+    width: 100%; /* 宽度100% */
+    max-width: 900px; /* 最大宽度900px */
+    margin: 0 auto; /* 水平居中 */
+    aspect-ratio: 3 / 4; /* 宽高比3:4 */
+    display: grid; /* 使用网格布局 */
+    gap: 4px; /* 网格间距4px */
+    background: #F5F5F7; /* 背景色为浅灰色 */
+    border-radius: var(--border-radius); /* 使用变量设置圆角 */
+    overflow: hidden; /* 隐藏溢出内容 */
+}
+
+.grid-cell { /* 网格单元格样式 */
+    background: white; /* 背景色为白色 */
+    overflow: hidden; /* 隐藏溢出内容 */
+    position: relative; /* 设置相对定位 */
+}
+
+.img-container { /* 图片容器样式 */
+    position: absolute; /* 绝对定位 */
+    top: 0; /* 距顶部0 */
+    left: 0; /* 距左侧0 */
+    width: 100%; /* 宽度100% */
+    height: 100%; /* 高度100% */
+}
+
+.img-container img { /* 图片样式 */
+    width: 100%; /* 宽度100% */
+    height: 100%; /* 高度100% */
+    object-fit: cover; /* 图片填充方式为cover */
+}
+
+.empty-preview { /* 空预览样式 */
+    display: flex; /* 使用弹性布局 */
+    align-items: center; /* 垂直居中对齐 */
+    justify-content: center; /* 水平居中对齐 */
+    height: 100%; /* 高度100% */
+    color: #86868B; /* 文字颜色为灰色 */
+    font-size: 1.1rem; /* 字体大小1.1rem */
+}
+
+/* 操作按钮容器 */
+.action-buttons { /* 操作按钮容器样式 */
+    display: flex; /* 使用弹性布局 */
+    gap: 1rem; /* 间距1rem */
+    max-width: 900px; /* 最大宽度900px */
+    margin: 0 auto; /* 水平居中 */
+}
+
+/* 添加生成预览按钮样式 */
+.generate-preview-button { /* 生成预览按钮样式 */
+    margin-bottom: 2rem; /* 底部外边距2rem */
+    background: var(--primary-color); /* 使用主题色作为背景 */
+    color: white; /* 文字颜色为白色 */
+    border: none; /* 移除边框 */
+    padding: 1rem 2rem; /* 内边距上下1rem左右2rem */
+    border-radius: var(--border-radius); /* 使用变量设置圆角 */
+    font-size: 1rem; /* 字体大小1rem */
+    font-weight: 500; /* 字体粗细500 */
+    cursor: pointer; /* 鼠标指针变为手型 */
+    width: 100%; /* 宽度100% */
+    max-width: 900px; /* 最大宽度900px */
+    margin: 0 auto 0rem; /* 水平居中 */
+    display: block; /* 设置为块级元素 */
+    transition: background-color 0.2s ease; /* 添加背景色过渡动画 */
+}
+
+.generate-preview-button:hover { /* 生成预览按钮悬停状态 */
+    background-color: #0056b3; /* 背景色变深 */
+}
+
+.generate-preview-button:disabled { /* 生成预览按钮禁用状态 */
+    background-color: #ccc; /* 背景色变为灰色 */
+    cursor: not-allowed; /* 鼠标指针变为禁止 */
+}
+
+/* 添加预览操作栏样式 */
+.preview-action-bar { /* 预览操作栏样式 */
+    display: flex; /* 使用弹性布局 */
+    gap: 1rem; /* 间距1rem */
+    justify-content: center; /* 水平居中对齐 */
+    margin-top: 2rem; /* 顶部外边距2rem */
+    padding: 0 1rem; /* 左右内边距1rem */
+    max-width: 900px; /* 最大宽度900px */
+    margin-left: auto; /* 左侧自动外边距 */
+    margin-right: auto; /* 右侧自动外边距 */
+}
+
+.preview-action-bar button { /* 预览操作栏按钮样式 */
+    padding: 0.75rem 1.5rem; /* 内边距上下0.75rem左右1.5rem */
+    border-radius: var(--border-radius); /* 使用变量设置圆角 */
+    font-size: 0.9rem; /* 字体大小0.9rem */
+    cursor: pointer; /* 鼠标指针变为手型 */
+    min-width: 120px; /* 最小宽度120px */
+}
+
+.select-all-button { /* 全选按钮样式 */
+    background: #f5f5f7; /* 背景色为浅灰色 */
+    border: 1px solid #d2d2d7; /* 边框颜色为灰色 */
+    color: var(--text-color); /* 使用变量设置文本颜色 */
+}
+
+.select-all-button:hover { /* 全选按钮悬停状态 */
+    background: #e5e5ea; /* 背景色变深 */
+}
+
+/* 修改预览区域样式 */
+.preview-section { /* 预览区域样式 */
+    flex: 0 0 400px; /* 固定宽度400px */
+    min-width: 400px; /* 最小宽度400px */
+    position: relative; /* 设置相对定位 */
+    scroll-snap-align: start; /* 滚动对齐到起始位置 */
 .grid-preview {
     width: 100%;
     max-width: 900px;
@@ -460,19 +572,33 @@ body {
 
 /* 添加生成预览按钮样式 */
 .generate-preview-button {
+    /* 设置按钮底部外边距 */
     margin-bottom: 2rem;
+    /* 设置按钮背景色为主题色 */
     background: var(--primary-color);
+    /* 设置文字颜色为白色 */
     color: white;
+    /* 移除边框 */
     border: none;
+    /* 设置内边距,上下1rem,左右2rem */
     padding: 1rem 2rem;
+    /* 设置圆角,使用全局变量 */
     border-radius: var(--border-radius);
+    /* 设置字体大小为1rem */
     font-size: 1rem;
+    /* 设置字体粗细为500 */
     font-weight: 500;
+    /* 设置鼠标悬停时显示手型指针 */
     cursor: pointer;
+    /* 设置宽度为100% */
     width: 100%;
+    /* 设置最大宽度为900px */
     max-width: 900px;
-    margin: 0 auto 2rem;
+    /* 设置外边距,水平居中,底部2rem */
+    margin: 0 auto 0rem;
+    /* 设置为块级元素 */
     display: block;
+    /* 设置背景色过渡动画,持续0.2秒,ease缓动 */
     transition: background-color 0.2s ease;
 }
 
@@ -557,28 +683,28 @@ body {
 
 /* 修改预览容器样式 */
 .preview-container {
-    display: flex;
-    gap: 2rem;
-    margin: 0 -2rem;
-    padding: 0 2rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    width: calc(100% + 4rem);
+    display: flex;                           /* 使用弹性布局，让子元素水平排列 */
+    gap: 1rem;                              /* 设置子元素之间的间距为2rem */
+    margin: 0 0rem;                        /* 使用负边距抵消父元素的内边距 */
+    padding: 1rem 1rem;                        /* 添加水平内边距，确保内容不会贴边 */
+    overflow-x: auto;                       /* 允许水平滚动 */
+    scroll-snap-type: x mandatory;          /* 启用横向滚动捕捉，强制对齐到元素边界 */
+    -webkit-overflow-scrolling: touch;      /* 在iOS设备上启用平滑滚动 */
+    width: calc(100%);              /* 设置宽度为父元素宽度加4rem，配合负边距使用 */
 }
 
 /* 修改网格预览样式 */
 .grid-preview {
-    width: 100%;
-    aspect-ratio: 3 / 4;
-    display: grid;
-    gap: 4px;
-    background: #F5F5F7;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    transform: scale(0.8);
-    transform-origin: center;
-    margin: -10% auto;
+    width: 100%;                        /* 设置网格预览的宽度为容器的100% */
+    aspect-ratio: 3 / 4;                /* 设置宽高比为3:4,保持固定的长方形比例 */
+    display: grid;                      /* 使用网格布局显示内容 */
+    gap: 4px;                          /* 设置网格单元格之间的间距为4px */
+    background: #F5F5F7;               /* 设置背景色为浅灰色 */
+    border-radius: var(--border-radius); /* 使用变量设置圆角边框 */
+    overflow: hidden;                   /* 隐藏超出容器的内容 */
+    transform: scale(0.8);             /* 将整个预览缩小到80%大小 */
+    transform-origin: center;          /* 设置变形的原点为中心点 */
+    margin: -10% auto;                 /* 使用负边距上下缩进10%，左右自动居中 */
 }
 
 /* 添加滚动条样式 */
